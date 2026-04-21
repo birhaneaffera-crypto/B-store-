@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <title>B'store Digital</title>
+    <style>
+        :root {
+            --tg-theme-bg-color: #ffffff;
+            --tg-theme-button-color: #2481cc;
+            --tg-theme-button-text-color: #ffffff;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--tg-theme-bg-color);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .header { text-align: center; margin-bottom: 20px; }
+        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .card {
+            border: 1px solid #eee;
+            border-radius: 12px;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .card img { max-width: 100%; border-radius: 8px; }
+        .btn {
+            background-color: var(--tg-theme-button-color);
+            color: var(--tg-theme-button-text-color);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            width: 100%;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>B'store</h1>
+        <p>Premium Digital Marketplace</p>
+    </div>
+
+    <div class="product-grid">
+        <div class="card">
+            <img src="https://via.placeholder.com/150" alt="Product">
+            <h3>Premium Sub</h3>
+            <p>$9.99</p>
+            <button class="btn" onclick="addToCart('Premium Sub', 9.99)">Add</button>
+        </div>
+        <div class="card">
+            <img src="https://via.placeholder.com/150" alt="Product">
+            <h3>Crypto Pack</h3>
+            <p>$19.99</p>
+            <button class="btn" onclick="addToCart('Crypto Pack', 19.99)">Add</button>
+        </div>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand(); // Opens the web app to full height
+
+        function addToCart(name, price) {
+            tg.MainButton.text = `Pay for ${name} ($${price})`;
+            tg.MainButton.show();
+            
+            tg.MainButton.onClick(() => {
+                tg.sendData(JSON.stringify({item: name, price: price}));
+                tg.close();
+            });
+        }
+    </script>
+</body>
+</html>
